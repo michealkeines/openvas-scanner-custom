@@ -1,5 +1,6 @@
 #include "custom_function.h"
 #include <stdio.h>
+#include <stdarg.h>
 #include <dlfcn.h>
 #include <stdint.h>
 
@@ -32,20 +33,24 @@ custom_function_loader (lex_ctxt *lexic)
     fprintf(stdout, "this is custom funciton loader\n");
     char *string;
     char *out;
+    int count;
     tree_cell *retc;
 
     char *loc = "/source/holm-custom/holm-custom.so";
     void *handle = dlopen(loc, RTLD_LAZY);
 
     string = get_str_var_by_num (lexic, 0);
-    fprintf(stdout, "str: %s\n", string);
+    count = get_int_var_by_num (lexic, 1, -1);
+    char *anon_str = get_str_var_by_num (lexic, 2);
+
+    fprintf(stdout, "str: %s, %d\n", string, count);
     func_ptr out_ptr = NULL;
     uint8_t res = load_lib_from_location(&out_ptr, handle, loc);
     fprintf(stdout, "res: %d\n", res);
     if (res == 0)
     {
         fprintf(stdout, "func: %p\n", out_ptr);
-        out = out_ptr(string, 1, "localhost");
+        out = out_ptr(string, count, anon_str);
         fprintf(stdout, "oout: %s\n", out);
     } else if (res == 1 || res == 2)
     {
