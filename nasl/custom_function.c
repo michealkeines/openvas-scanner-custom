@@ -30,7 +30,7 @@ u_int8_t load_lib_from_location (func_ptr *out_ptr, void *handle, char *loc)
 tree_cell *
 custom_function_loader (lex_ctxt *lexic)
 {
-    fprintf(stdout, "this is custom funciton loader\n");
+    fprintf(stdout, "inside custom funciton loader\n");
 
     char *out;
     out = "not valid";
@@ -45,8 +45,8 @@ custom_function_loader (lex_ctxt *lexic)
 
     if (res == 0)
     {
-        fprintf(stdout, "loc in passing: %p\n", lexic);
-        fprintf(stdout, "func: %p\n", out_ptr);
+        fprintf(stdout, "variable are passed at: %p\n", lexic);
+        fprintf(stdout, "current function pointer: %p\n", out_ptr);
         retc = out_ptr(lexic);
     } else if (res == 1 || res == 2)
     {
@@ -62,8 +62,7 @@ custom_function_loader (lex_ctxt *lexic)
         retc->x.str_val = out;
     }
 
-    fprintf(stdout, "oout: %p\n",retc);
-    fprintf(stdout, "output: %s\n", retc->x.str_val);
+    fprintf(stdout, "exiting custom loader retc: %p\n",retc);
 
     return retc;
 }
