@@ -4,7 +4,7 @@
 #include "nasl_lex_ctxt.h" /* for lex_ctxt */
 #include <stdarg.h>
 
-typedef char *(*func_ptr)(char * func_name, int count, char *);
+typedef tree_cell *(*func_ptr)(lex_ctxt *lexic);
 
 tree_cell *
 custom_function_loader (lex_ctxt *lexic);
